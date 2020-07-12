@@ -8,5 +8,4 @@
 # [数据库开发&设计规范](https://github.com/Shing20/shing-common-pmp-tools/tree/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%26%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83)
 # [安全](https://github.com/Shing20/shing-common-pmp-tools/tree/master/6.%E5%AE%89%E5%85%A8)
 # [反编译](https://github.com/Shing20/shing-common-pmp-tools/tree/master/7.%E5%8F%8D%E7%BC%96%E8%AF%91)
-
-
+# [IDE插件](https://github.com/Shing20/shing-common-pmp-tools/blob/master/8.IDE%E6%8F%92%E4%BB%B6)
