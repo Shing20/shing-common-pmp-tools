@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="LOG_HOME" value="/usr/local/logs/xxx-service-log" />
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread：线程名，%level：日志级别，%msg：日志消息，%n：换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] [%logger %method:%line]-%msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 生成日志文件 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/service.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<fileNamePattern>${LOG_HOME}/service.%i.log</fileNamePattern>
+			<!--日志文件窗口大小 -->
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<!--日志文件最大的大小 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>128MB</MaxFileSize>
+		</triggeringPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread：线程名，%level：日志级别，%msg：日志消息，%n：换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread] [%logger %method:%line]-%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 日志输出级别 -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>
