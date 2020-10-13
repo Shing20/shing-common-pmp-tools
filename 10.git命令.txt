@@ -1,0 +1,159 @@
+/var/log/gitlab/gitlab-rails/production.log  ---gitlab页面日志
+
+
+git remote show origin 显示远端信息
+git push --mirror +迁移的服务器路径（ssh）
+
+1）配置使用git仓库的人员姓名?
+		git config --global user.name "Your Name Comes Here"
+2）配置使用git仓库的人员email?
+		git config --global user.email?you@yourdomain.example.com
+
+前者是git 工具
+
+git remote set-url origin +ssh地址 git迁移
+
+ssh-keygen -C '123456@qq.com' -t rsa //生成此邮箱公钥
+
+git rm +文件名(失败，可以执行git add+文件名操作)
+git commit -m "删除文件件/文件名"
+ 在push到服务器上去
+
+git revert 是生成一个新的提交来撤销某次提交，此次提交之前的commit都会被保留
+git reset 是回到某次提交，提交及之前的
+git add *增加所有
+git rm -f 文件名/* //不保留本地,删除文件
+git rm -r --cached +文件名 删除文件(并保留本地)
+
+git clone xxx.git "指定目录"
+
+在本地新建同名的("dev")分支，并切换到该分支
+
+git checkout -t origin/dev 该命令等同于：
+git checkout -b dev origin/dev
+
+git clean -f //强制删除当前目录下不干净的东西
+git branch -r 查看远程分支
+git branch (-m | -M) [<oldbranch>] <newbranch>重命名分支
+git checkout +文件名 撤销当前改动
+
+git commit -m "信息"文件名 //对单个文件的提交
+git commit -am"信息" 对所有文件的提交
+git commit -C head -a --amend 增补提交，不会产生新的提交记录
+
+git branch --merged                                       # 显示所有已合并到当前分支的分支 
+git branch --no-merged                                    # 显示所有未合并到当前分支的分支 
+git log --decorate --graph --oneline --all 查看所有分支历史
+解决乱码 export LC_ALL=en_US.utf8//安装目录下面的/etc下面的
+git config color.ui true 比较高亮
+git config --global color.ui true
+
+git log --oneline --decorate --graph --all
+git tag "v0" a1aba30 
+　　-- 第三个参数是tag名称，第四个参数是commit的hash值，可用第一个命令查看
+git config --global alias.lol "log --oneline --decorate --graph --all"
+　　--起别名 此时命令为git lol
+git stash save -a "暂存区别名"
+　　--git add之后但没有commit，想切换分支就必须将工作区中的内容备份stash save保存进git栈内
+git stash list 
+　　--查看当前分支下，git栈的所有备份，可以利用这个列表决定从哪个地方进行恢复
+git stash pop --index stash@{0}
+　　--从git栈中读取最近的一次内容，恢复工作区的内容
+git stash drop stash@{0}
+　　--清理git栈内的指定备份，如果最后一个参数为空，则默认清理最后一个备份
+git stash clear 
+　　--清理git栈内所有的备份
+git abort --abort
+　　--放弃此次merge操作
+
+git clean - n //查看将要删除那些文件
+git clean -f //删除所有不是被忽略的文件
+git clean -f 文件名 //删除此文件
+
+git tag -a tag号 -m "信息" 提交id
+
+git cherry-pick 提交id//挑选某一次提交
+
+ git log --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+ git log --oneline --decorate --graph --all
+ git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -1 HEAD
+
+git revert 增加reflog信息
+gir reset 不会增加reflog信息，会撤销提交信息
+git reset --mixed 从版本库中撤回，而且暂存区也撤销，导致未跟踪
+
+git merge 被合并分组名 --no-ff -m "信息"
+二 查看与对比历史记录
+主要学习以下几条命令命令 1.git log 2.git show 3.git diff
+git log
+　　--显示完整commit信息,若一页显示不全，按空格或f向下翻页，按b向上翻页，按q退出
+git log -p
+　　--显示每一次commit之间差异信息
+git log --stat
+　　--显示每一次commit之间差异的统计信息
+git log --oneline --decorate --graph --all
+　　--显示完整的历史示意图，--oneline显示单行信息，--decorate显示引用信息，--graph显示图形化历史信息 --all显示所有分支信息
+git show <commit的对应hash值>
+　　--查看当前分支下的提交
+git show master^
+　　--master当前指向的提交记录的第一父提交
+git show master^2
+　　--master当前指向的提交记录的第二父提交
+git show --stat master^2
+　　--显示提交所做出的改变信息
+git diff 
+　　--显示工作区和暂存区之间的差异
+git diff --cached
+　　--显示暂存区和历史提交之间的差异
+git diff HEAD~2 -- master.txt 
+　　--显示当前工作区与指定历史提交之间的差异，后面可以指定某个特定文件名
+git diff --cached HEAD~2 -- master.txt
+　　--显示暂存区与指定历史提交之间的差异，后面可以指定某个特定文件名
+git diff HEAD HEAD~2 -- master.txt
+　　--显示两次历史提交之间的差异，后面可以指定某个特定文件名
+git diff --color-words / git diff --word-diff
+　　--显示工作区与暂存区之间文件中，具体单词之间差异
+
+三 撤销修改
+主要学习以下几条命令: 1.git checkout 2.git reset 3.git clean 4.git revert
+git checkout -- master.txt
+　　--撤销工作区中master.txt的修改,其实是将暂存区中的文件覆盖了工作中的文件
+git reset master.txt 
+　　--撤销git add后的文件回工作区
+git checkout <某次历史提交> -- <指定文件名>
+　　--回退当前工作区中的某个文件的历史版本
+git reset <某次历史提交> -- <指定文件名>
+　　--回退暂存区中的某个文件的历史版本
+vim .gitingore
+git add .gitingore
+git commit -m "add ingore"
+　　--可以在.gitingore中增加一些需要忽略的文件，此时git add .的时候就不会对.gitingore中忽略的文件进行add
+git clean -n/-f/-df 
+　　--git clean主要是删除一些没有git add的文件，-n是显示将要删除的文件和目录, -f删除文件，-df删除文件和目录
+git clean -n -X/git clean -X -f
+　　--显示并删除将要删除的.gitingore中忽略的文件
+git revert <某次历史提交>
+　　--创建一个commit来覆盖当前的commit，HEAD指针是向后移动的，而
+
+三 重写历史记录
+主要学习以下几种命令: 1.git commit --amend 2.git rebase 3.git reset 4.git reflog
+git commit --amend
+　　--修改已经提交的commit -m后所带的信息
+git checkout -b test_rebase HEAD~
+　　--基于当前分支的上一个提交创建分支test_rebase
+git rebase master
+　　--合并master分支，但也git merge的区别就是，合并操作后，当前分支的历史看上去是线性的，而git merge后，当前分支有两条路径。处理流程如下：
+　　　　--git rebase master
+　　　　--处理冲突
+　　　　--git add <冲突文件>
+　　　　--git rebase --continue
+git rebase --abort
+　　--取消此次rebase的操作
+git reflog -10
+　　--维护HEAD引用的变化历史，显示近10条的记录
+git reset --hard/--mixed/--soft/--keep/--merge HEAD@{5}
+　　--hard还原了暂存区和工作区的文件到某个具体的commit,（即已提交的，暂存区和工作区文件全部还原到指定的commit） 并移动HEAD指针到指定commit
+　　--mixed是默认操作，会把已经提交的和暂存区的文件退回到工作区，并移动HEAD指针到指定commit
+　　--soft会把已经提交的文件退回到暂存区，暂存区和工作区原有的文件不变，并移动指针到指定commit，并不还原任何文件
+	--keep会把已经提交的文件重置到commit ID的状态，暂存区的退回到工作区，并移动指针到指定commit
+
